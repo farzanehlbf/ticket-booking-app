@@ -55,7 +55,7 @@ class ReservationController extends Controller
 
     public function cancel($id)
     {
-        
+
         $reservation = Reservation::findOrFail($id);
 
         // اگر رزرو منقضی شده باشد، خطا برمی‌گرداند

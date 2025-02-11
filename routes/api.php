@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('reserve', [ReservationController::class, 'reserve']);  // رزرو کردن
     Route::put('reserve/{id}/cancel', [ReservationController::class, 'cancel']);
+
+    Route::post('bookings', [BookingController::class, 'booking']);
+    Route::post('refund/{ticket_id}', [BookingController::class, 'refund']);
 
 
 
