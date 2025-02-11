@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Origin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Origin>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Terminal>
  */
-class OriginFactory extends Factory
+class TerminalFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +18,10 @@ class OriginFactory extends Factory
     public function definition(): array
     {
         return [
+            'origin_id' => Origin::factory(),
             'name' => $this->faker->city,
-            'city_code' => $this->faker->numerify('####'),
+            'terminal_code' => $this->faker->unique()->bothify('???-###'),
         ];
+
     }
 }

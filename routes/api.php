@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\OriginController;
+use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\TerminalController;
+use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +21,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('origins', OriginController::class);
     Route::apiResource('destinations', DestinationController::class);
+
+    //  برای گرفتن ترمینال‌ها بر اساس کد شهر
+    Route::get('terminals-by-code', [TerminalController::class, 'getTerminalsByCityCode']);
+    Route::apiResource('terminals', TerminalController::class);
+
+    Route::apiResource('trips', TripController::class);
+
+    Route::get('search', [SearchController::class, 'search']);
+
+
+
+
 });
 
 
