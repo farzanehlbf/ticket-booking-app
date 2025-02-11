@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\DestinationController;
+use App\Http\Controllers\Api\OriginController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,5 +15,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
-Route::apiResource('origins', OriginController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('origins', OriginController::class);
+    Route::apiResource('destinations', DestinationController::class);
+});
+
 
