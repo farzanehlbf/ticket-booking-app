@@ -11,8 +11,8 @@ class Reservation extends Model
         return $this->belongsTo(Trip::class);
     }
 
-    public function reservationPassengers()
+    public function passengers()
     {
-        return $this->hasMany(ReservationPassenger::class);
+        return $this->belongsToMany(Passenger::class, 'reservation_passengers');
     }
 }

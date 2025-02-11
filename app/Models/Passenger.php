@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passenger extends Model
 {
-    public function reservationPassengers()
+    public function reservations()
     {
-        return $this->hasMany(ReservationPassenger::class);
+        return $this->belongsToMany(Reservation::class, 'reservation_passengers');
     }
 
     public function tickets()
