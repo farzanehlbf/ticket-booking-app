@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('origin_id')->constrained()->onDelete('cascade'); // ارتباط با مبدا
             $table->foreignId('destination_id')->constrained()->onDelete('cascade'); // ارتباط با مقصد
             $table->foreignId('terminal_id')->constrained()->onDelete('cascade'); // ارتباط با ترمینال
+            $table->foreignId('transport_type_id')->constrained()->onDelete('cascade');
             $table->timestamp('date'); // تاریخ حرکت
             $table->timestamps();
         });

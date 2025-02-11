@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passenger extends Model
 {
+    protected $guarded=[];
     public function reservations()
     {
         return $this->belongsToMany(Reservation::class, 'reservation_passengers');

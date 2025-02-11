@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\OriginController;
+use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\TripController;
@@ -29,6 +30,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('trips', TripController::class);
 
     Route::get('search', [SearchController::class, 'search']);
+
+    Route::post('reserve', [ReservationController::class, 'reserve']);  // رزرو کردن
+    Route::put('reserve/{id}/cancel', [ReservationController::class, 'cancel']);
 
 
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
+    protected $guarded=[];
     public function trip()
     {
         return $this->belongsTo(Trip::class);

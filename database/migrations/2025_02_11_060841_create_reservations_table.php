@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('trip_id')->constrained()->onDelete('cascade'); // ارتباط با سفر
             $table->integer('passengers_count'); // تعداد مسافران
             $table->json('chair_numbers'); // شماره صندلی‌ها
+            $table->timestamp('expires_at')->nullable();
+            $table->enum('status', ['active', 'cancelled'])->default('active');
             $table->timestamps();
         });
     }

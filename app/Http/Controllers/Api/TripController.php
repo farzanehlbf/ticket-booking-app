@@ -29,6 +29,7 @@ class TripController extends Controller
             'origin_id' => 'required|exists:origins,id',
             'destination_id' => 'required|exists:destinations,id',
             'terminal_id' => 'required|exists:terminals,id',
+            'transport_type_id' => 'required|exists:transport_types,id',
             'date' => 'required|date',
         ]);
 
@@ -46,6 +47,7 @@ class TripController extends Controller
             'origin_id' => 'required|exists:origins,id',
             'destination_id' => 'required|exists:destinations,id',
             'terminal_id' => 'required|exists:terminals,id',
+            'transport_type_id' => 'required|exists:transport_types,id',
             'date' => 'required|date',
         ]);
 
