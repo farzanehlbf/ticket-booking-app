@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\OriginController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TerminalController;
+use App\Http\Controllers\Api\TrackingController;
 use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BookingController;
@@ -37,6 +38,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('bookings', [BookingController::class, 'booking']);
     Route::post('refund/{ticket_id}', [BookingController::class, 'refund']);
+
+    Route::get('/tracking', [TrackingController::class, 'track']);
+
 
 
 
