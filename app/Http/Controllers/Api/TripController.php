@@ -3,65 +3,49 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTripRequest;
+use App\Http\Resources\TripResource;
 use App\Models\Trip;
+use App\Services\TripService;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
 
+    protected $tripService;
+
+    public function __construct(TripService $tripService)
+    {
+        $this->tripService = $tripService;
+    }
+
     public function index()
     {
-        $trips = Trip::with(['origin', 'destination', 'terminal'])->get();
-        return response()->json($trips);
+        $trips = $this->tripService->getAllTrips();
+        return TripResource::collection($trips);
     }
 
-    // نمایش یک سفر خاص
     public function show($id)
     {
-        $trip = Trip::with(['origin', 'destination', 'terminal'])->findOrFail($id);
-        return response()->json($trip);
+        $trip = $this->tripService->getTripById($id);
+        return new TripResource($trip);
     }
 
-    // ایجاد سفر جدید
-    public function store(Request $request)
+    public function store(StoreTripRequest $request)
     {
-        $request->validate([
-            'origin_id' => 'required|exists:origins,id',
-            'destination_id' => 'required|exists:destinations,id',
-            'terminal_id' => 'required|exists:terminals,id',
-            'transport_type_id' => 'required|exists:transport_types,id',
-            'date' => 'required|date',
-        ]);
-
-        $trip = Trip::create($request->all());
-
-        return response()->json($trip, 201);
+        $trip = $this->tripService->createTrip($request);
+        return new TripResource($trip, 201);
     }
 
-    // بروزرسانی سفر
-    public function update(Request $request, $id)
+    public function update(StoreTripRequest $request, $id)
     {
-        $trip = Trip::findOrFail($id);
-
-        $request->validate([
-            'origin_id' => 'required|exists:origins,id',
-            'destination_id' => 'required|exists:destinations,id',
-            'terminal_id' => 'required|exists:terminals,id',
-            'transport_type_id' => 'required|exists:transport_types,id',
-            'date' => 'required|date',
-        ]);
-
-        $trip->update($request->all());
-
-        return response()->json($trip);
+        $trip = $this->tripService->updateTrip($request, $id);
+        return new TripResource($trip);
     }
 
-    // حذف سفر
     public function destroy($id)
     {
-        $trip = Trip::findOrFail($id);
-        $trip->delete();
-
-        return response()->json(['message' => 'Trip deleted successfully']);
+        $message = $this->tripService->deleteTrip($id);
+        return response()->json($message);
     }
 }
