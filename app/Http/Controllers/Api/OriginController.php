@@ -32,7 +32,7 @@ class OriginController extends Controller
         ], HttpResponse::HTTP_CREATED);
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreOriginRequest $request, $id)
     {
         $updated=$this->originService->updateOrigin($request->all(), $id);
         if (!$updated) {
