@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OriginResource extends JsonResource
+class TerminalResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,10 @@ class OriginResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'city_code' => $this->city_code,
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
-        ];
+            'terminal_code' => $this->terminal_code,
+            'city_code' => $this->origin->city_code ?? null,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            ];
     }
 }
