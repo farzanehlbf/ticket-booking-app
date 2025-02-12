@@ -20,11 +20,14 @@ class TripFactory extends Factory
      */
     public function definition(): array
     {
+        // اطمینان از ایجاد رکورد 'Bus' در صورت عدم وجود
+        $busTransportType = TransportType::firstOrCreate(['name' => 'Bus']);
+
         return [
             'origin_id' => Origin::factory(),
             'destination_id' => Destination::factory(),
             'terminal_id' => Terminal::factory(),
-            'transport_type_id' => TransportType::where('name', 'Bus')->first()->id,
+            'transport_type_id' => $busTransportType->id, // استفاده از شناسه رکورد
             'date' => $this->faker->dateTimeBetween('now', '+1 year'),
         ];
     }

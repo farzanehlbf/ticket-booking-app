@@ -3,38 +3,70 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Origin;
+use App\Http\Requests\StoreOriginRequest;
+use App\Http\Resources\OriginResource;
+use App\Services\OriginService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 
 class OriginController extends Controller
 {
+    protected $originService;
+
+    public function __construct(OriginService $originService)
+    {
+        $this->originService = $originService;
+    }
     public function index()
     {
-        $origins = Origin::all();
-        return response()->json($origins);
+        $origins=$this->originService->getAllOrigins();
+        return OriginResource::collection($origins);
     }
 
-    public function store(Request $request)
+    public function store(StoreOriginRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-        ]);
-
-        $origin = Origin::create($request->all());
-        return response()->json($origin, 201);
+        $origin=$this->originService->createOrigin($request->all());
+        return response()->json([
+            'message' => 'Origin created successfully.',
+            'entity' => new OriginResource($origin),
+        ], HttpResponse::HTTP_CREATED);
     }
 
     public function update(Request $request, $id)
     {
-        $origin = Origin::findOrFail($id);
-        $origin->update($request->all());
-        return response()->json($origin);
+        $updated=$this->originService->updateOrigin($request->all(), $id);
+        if (!$updated) {
+            return response()->json([
+                'message' => 'Error updating origin.'
+            ], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Origin updated successfully.',
+            'entity' => new OriginResource($updated),
+        ], HttpResponse::HTTP_OK);
     }
 
     public function destroy($id)
     {
-        $origin = Origin::findOrFail($id);
-        $origin->delete();
-        return response()->json(['message' => 'Origin deleted successfully']);
+        $origin = $this->originService->findOrigin($id);
+
+        if (!$origin) {
+            return response()->json([
+                'message' => 'Origin not found.'
+            ], HttpResponse::HTTP_NOT_FOUND);
+        }
+
+        $deleted = $this->originService->deleteOrigin($id);
+
+        if (!$deleted) {
+            return response()->json([
+                'message' => 'Error deleting origin.'
+            ], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->json([
+            'message' => 'Origin deleted successfully.'
+        ], HttpResponse::HTTP_OK);
     }
 }
