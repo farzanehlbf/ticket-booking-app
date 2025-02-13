@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Origin extends Model
 {
     use HasFactory;
-    public function terminals()
-    {
-        return $this->hasMany(Terminal::class);
-    }
+
 
     public function trips()
     {

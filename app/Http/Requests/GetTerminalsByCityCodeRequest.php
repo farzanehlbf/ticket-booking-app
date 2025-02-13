@@ -22,7 +22,7 @@ class GetTerminalsByCityCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'origin' => 'required|string|max:10',
+            'origin' => 'nullable|string|max:10',
         ];
     }
 }

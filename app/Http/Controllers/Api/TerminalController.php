@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GetTerminalsByCityCodeRequest;
 use App\Http\Requests\StoreTerminalRequest;
-use App\Http\Resources\TerminalResource;
+use App\Http\Resources\BusTerminalResource;
 use App\Services\TerminalService;
 use Illuminate\Http\Response as HttpResponse;
 
@@ -22,7 +22,7 @@ class TerminalController extends Controller
     public function index()
     {
         $terminals = $this->terminalService->getAllTerminals();
-        return TerminalResource::collection($terminals);
+        return BusTerminalResource::collection($terminals);
 
     }
 
@@ -31,7 +31,7 @@ class TerminalController extends Controller
         $terminal = $this->terminalService->createTerminal($request->validated());
         return response()->json([
             'message' => 'Terminal created successfully.',
-            'entity' => new TerminalResource($terminal),
+            'entity' => new BusTerminalResource($terminal),
         ], HttpResponse::HTTP_CREATED);
     }
 
@@ -46,7 +46,7 @@ class TerminalController extends Controller
 
         return response()->json([
             'message' => 'Terminal updated successfully.',
-            'entity' => new TerminalResource($updated),
+            'entity' => new BusTerminalResource($updated),
         ], HttpResponse::HTTP_OK);
     }
 
@@ -76,7 +76,7 @@ class TerminalController extends Controller
     public function getTerminalsByCityCode(GetTerminalsByCityCodeRequest $request)
     {
         $terminals = $this->terminalService->getTerminalsByCityCode($request->validated());
-        return TerminalResource::collection($terminals);
+        return BusTerminalResource::collection($terminals);
     }
 
 }

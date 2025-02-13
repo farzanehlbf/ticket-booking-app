@@ -7,13 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DestinationRepository extends BaseRepository implements DestinationRepositoryInterface
 {
-    /**
-     * ProductRepository constructor.
-     *
-     * @param Model $model
-     */
-    public function __construct(Model $model)
+    public function __construct()
     {
-        parent::__construct($model);
+        parent::__construct(new Destination());
     }
 }

@@ -22,4 +22,13 @@ class BusTerminal extends Model
     {
         return $this->morphMany(Trip::class, 'destination_terminalable');
     }
+    public function origin()
+    {
+        return $this->belongsTo(Origin::class, 'origin_id');
+    }
+
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class, 'destination_id');
+    }
 }
