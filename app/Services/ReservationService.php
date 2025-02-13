@@ -20,6 +20,7 @@ class ReservationService
             'passengers_count' => count($request->passengers_list),
             'chair_numbers' => $request->chair_numbers,
             'expiry_time' => $expiryTime,
+            'trip_id' => $search->trip_id,
             'status' => 'pending',
         ]);
 

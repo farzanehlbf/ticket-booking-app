@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('search_id')->constrained('searches')->onDelete('cascade');
+            $table->foreignId('trip_id')->constrained()->onDelete('cascade');
             $table->integer('passengers_count');
             $table->json('chair_numbers'); // ذخیره شماره صندلی‌ها به صورت JSON
             $table->timestamp('expiry_time'); // زمان انقضا رزرو

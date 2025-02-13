@@ -15,6 +15,7 @@ class Reservation extends Model
         'chair_numbers',
         'expiry_time',
         'status',
+        'trip_id',
     ];
     protected $casts = [
     'chair_numbers' => 'array',
