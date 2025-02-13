@@ -40,7 +40,7 @@ class Reservation extends Model
     public function passengers()
     {
         return $this->belongsToMany(Passenger::class, 'reservation_passengers')
-        ->withPivot('leader')  // فیلد leader از جدول میانه
+        ->withPivot('leader')
         ->withTimestamps();
     }
     public function tickets()
