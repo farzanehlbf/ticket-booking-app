@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\BusTerminal;
 use App\Models\Destination;
 use App\Models\Origin;
 use App\Models\Terminal;
@@ -20,15 +21,16 @@ class TripFactory extends Factory
      */
     public function definition(): array
     {
-        // اطمینان از ایجاد رکورد 'Bus' در صورت عدم وجود
-        $busTransportType = TransportType::firstOrCreate(['name' => 'Bus']);
-
         return [
-            'origin_id' => Origin::factory(),
-            'destination_id' => Destination::factory(),
-            'terminal_id' => Terminal::factory(),
-            'transport_type_id' => $busTransportType->id, // استفاده از شناسه رکورد
-            'date' => $this->faker->dateTimeBetween('now', '+1 year'),
+            'origin_id' => BusTerminal::inRandomOrder()->first()->origin_id ?? null,  // مبدا تصادفی از ترمینال
+            'destination_id' => BusTerminal::inRandomOrder()->first()->destination_id ?? null,  // مقصد تصادفی از ترمینال
+            'transport_type_id' => TransportType::inRandomOrder()->first()->id,  // نوع حمل‌ونقل تصادفی
+            'origin_terminalable_id' => BusTerminal::inRandomOrder()->first()->id,  // شناسه ترمینال مبدا
+            'origin_terminalable_type' => BusTerminal::class,  // نوع ترمینال مبدا
+            'destination_terminalable_id' => BusTerminal::inRandomOrder()->first()->id,  // شناسه ترمینال مقصد
+            'destination_terminalable_type' => BusTerminal::class,  // نوع ترمینال مقصد
+            'date' => $this->faker->dateTimeBetween('now', '+1 month'),  // تاریخ سفر
         ];
     }
+
 }

@@ -12,9 +12,13 @@ class Terminal extends Model
     {
         return $this->belongsTo(Origin::class);
     }
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class);
+    }
 
     public function trips()
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasMany(Trip::class, 'origin_terminal_id');
     }
 }

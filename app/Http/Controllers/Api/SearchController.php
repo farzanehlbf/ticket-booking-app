@@ -3,33 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Trip;
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
+use App\Services\SearchService;
+use Illuminate\Http\Response as HttpResponse;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    protected $searchService;
+
+    public function __construct(SearchService $searchService)
     {
+        $this->searchService = $searchService;
+    }
 
-        $request->validate([
-            'origin' => 'required|string',
-            'destination' => 'required|string',
-            'date' => 'required|date_format:U',
-        ]);
+    public function search(SearchRequest $request)
+    {
+        $validated = $request->validated();
 
+        // استفاده از سرویس برای انجام جستجو
+        $trips = $this->searchService->performSearch($validated);
 
-        $trips = Trip::with(['origin', 'destination', 'terminal'])
-            ->whereHas('origin', function ($query) use ($request) {
-                $query->where('city_code', $request->origin);
-            })
-            ->whereHas('destination', function ($query) use ($request) {
-                $query->where('city_code', $request->destination);
-            })
-            ->where('date', '>=', \Carbon\Carbon::createFromTimestamp($request->date)->toDateTimeString())
-            ->get();
-
-
-
-        return response()->json($trips);
+        // برگرداندن نتایج به صورت JSON
+        return response()->json($trips, HttpResponse::HTTP_OK);
     }
 }

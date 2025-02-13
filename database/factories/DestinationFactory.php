@@ -18,7 +18,7 @@ class DestinationFactory extends Factory
     {
         return [
             'name' => $this->faker->city,
-            'city_code' => $this->faker->numerify('####'),
+            'city_code' => $this->faker->unique()->numberBetween(1000, 9999),
         ];
     }
 }

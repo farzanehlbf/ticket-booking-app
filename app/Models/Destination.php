@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Destination extends Model
 {
     use HasFactory;
+
+    public function terminals()
+    {
+        return $this->hasMany(Terminal::class);
+    }
     public function trips()
     {
         return $this->hasMany(Trip::class);

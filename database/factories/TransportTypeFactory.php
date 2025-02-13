@@ -17,7 +17,9 @@ class TransportTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement(['Bus', 'Airplane', 'Train']),
+            'name' => $this->faker->unique()->randomElement(['Bus', 'Plane', 'Train']),  // مقادیر تصادفی و یکتا
         ];
     }
+
+
 }

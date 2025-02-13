@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transport_types', function (Blueprint $table) {
+        Schema::create('bus_terminals', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('origin_id')->nullable()->constrained('origins')->onDelete('cascade');
+            $table->foreignId('destination_id')->nullable()->constrained('destinations')->onDelete('cascade');
+            $table->string('name');
+            $table->string('terminal_code')->unique();
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transport_types');
+        Schema::dropIfExists('bus_terminals');
     }
 };

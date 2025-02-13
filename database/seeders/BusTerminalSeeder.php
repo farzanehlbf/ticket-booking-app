@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\TransportType;
+use App\Models\BusTerminal;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TransportTypeSeeder extends Seeder
+class BusTerminalSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        TransportType::factory()->count(4)->create();
+        BusTerminal::factory()->count(3)->create();
     }
 }
