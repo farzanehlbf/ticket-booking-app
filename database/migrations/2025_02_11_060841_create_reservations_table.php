@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('trip_id')->constrained()->onDelete('cascade'); // ارتباط با سفر
-            $table->integer('passengers_count'); // تعداد مسافران
-            $table->json('chair_numbers'); // شماره صندلی‌ها
-            $table->timestamp('expires_at')->nullable();
-            $table->enum('status', ['active', 'cancelled'])->default('active');
+            $table->foreignId('search_id')->constrained('searches')->onDelete('cascade');
+            $table->integer('passengers_count');
+            $table->json('chair_numbers'); // ذخیره شماره صندلی‌ها به صورت JSON
+            $table->timestamp('expiry_time'); // زمان انقضا رزرو
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

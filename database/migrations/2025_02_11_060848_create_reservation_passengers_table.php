@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('reservation_id')->constrained()->onDelete('cascade'); // ارتباط با رزرو
             $table->foreignId('passenger_id')->constrained()->onDelete('cascade'); // ارتباط با مسافر
+            $table->boolean('leader')->default(false);
             $table->timestamps();
         });
     }
